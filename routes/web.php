@@ -13,6 +13,7 @@
 
 
 use App\Articulo;
+use App\Cliente;
 
 /*
 Route::get('/', function () {
@@ -87,6 +88,7 @@ $articulos->save();
 
 Route::get("/actualizar", function() {
 
+    /*
     $articulos=Articulo::find(7);
     
     $articulos->Nombre_Articulo="Pantalones";
@@ -96,5 +98,39 @@ Route::get("/actualizar", function() {
     $articulos->seccion="Confección";
     
     $articulos->save();
+    */
+/*
+    Articulo::where("seccion","DECORACION")->update(["seccion" => "Menajes"]);
+    */
+    Articulo::where("seccion","Menajes")->where("pais_origen","Argentina")->update(["precio" => 1.5]);
+    /* Pregunta: ¿Cómo hacer para colocar en lugar de un precio fijo en el update, el resultado de una 
+    fórmula, por ejemplo precio x 1,50?
+    */
+    });
+
+    Route::get("/borrar", function() {
+
+        $articulo=Articulo::find(7);
+
+        $articulo->delete();
+
+
+    /* Otra forma de borrar en base a un criterio de otro campo
+    Articulo::where("seccion","Menajes")->delete();
+    borraría todos los artículos que tengan el valor Menajes en el campo seccion.
+    */
+
+    });
     
+    Route::get("/create", function() {
+
+        Articulo::create(["Nombre_articulo"=>"Impresora","Precio"=>50,"Pais_origen"=>"Colombia","Observaciones"=>"S/D","seccion"=>"Informática"]);
+
+
+    });
+
+    Route::get("/cliente/{id}/articulo", function($id) {
+
+        return Cliente::find($id)->articulo;
+
     });
