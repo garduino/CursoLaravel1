@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Articulo extends Model
 {
@@ -15,4 +16,16 @@ class Articulo extends Model
         "Observaciones",
         "seccion"
     ];
+
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
+    public function cliente() {
+
+        return $this->belongsTo("App\Cliente");
+
+    }
+
+
 }

@@ -67,8 +67,20 @@ Route::get("/leer", function() {
     }
     */
 
+    /*
     $articulos=Articulo::where("pais_origen", "ARGENTINA")->get();
+    */
+
+    /*
+    $articulos=Articulo::where("id", 4)->get();
+    */
+
+    $articulos = Articulo::withTrashed()
+                ->where('id', 4)
+                ->restore();
+    /*
     return $articulos;
+    */  
 });
 
 
@@ -132,5 +144,28 @@ Route::get("/actualizar", function() {
     Route::get("/cliente/{id}/articulo", function($id) {
 
         return Cliente::find($id)->articulo;
+
+    });
+
+    Route::get("/softdelete", function() {
+
+        Articulo::find(4)->delete();
+
+    });
+
+
+    Route::get("/harddelete", function() {
+
+        $articulos = Articulo::withTrashed()
+                ->where('id', 4)
+                ->forceDelete();
+    });
+
+
+    Route::get("/articulo/{id}/cliente", function($id) {
+
+        /* return Articulo::find($id)->cliente['Nombre']; */
+        
+        return Articulo::findOrFail($id)->cliente->Nombre;
 
     });
