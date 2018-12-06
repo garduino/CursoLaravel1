@@ -169,3 +169,45 @@ Route::get("/actualizar", function() {
         return Articulo::findOrFail($id)->cliente->Nombre;
 
     });
+
+    Route::get("/articulos", function() {
+
+        $articulos = Cliente::find(3)->articulos->where("pais_origen","JAPON");
+
+        foreach ($articulos as $articulo) {
+            //
+            // var_dump($articulo);
+            echo $articulo->Nombre_Articulo . "<br>";
+        }
+
+    });
+
+    Route::get("/cliente/{id}/perfil", function($id) {
+
+       $cliente=Cliente::find($id);
+       
+       foreach($cliente->perfils as $perfil) {
+
+        return $perfil->nombre;
+
+       }
+
+
+    });
+
+
+    /* Relaciones Polimórficas */
+    Route::get("/calificaciones", function() {
+
+        // $cliente=Cliente::find(1);
+        $articulo=Articulo::find(5);
+        
+        foreach($articulo->calificaciones as $calificacion) {
+        /* foreach($cliente->calificaciones as $calificacion) { */
+ 
+         return $calificacion->calificacion;
+ 
+        }
+ 
+ 
+     });

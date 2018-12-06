@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Articulo extends Model
 {
     //
+    /*
     protected $fillable=[
 
         "Nombre_articulo",
@@ -25,6 +26,12 @@ class Articulo extends Model
 
         return $this->belongsTo("App\Cliente");
 
+    }
+    */
+
+    public function calificaciones()
+    {
+        return $this->morphMany('App\Calificaciones','calificacion');
     }
 
 
